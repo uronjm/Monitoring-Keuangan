@@ -8,178 +8,154 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- FontAwesome untuk Icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Chart.js untuk Grafik -->
+    <!-- Chart.js untuk Grafik Dashboard & Cashflow -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="bg-slate-100 font-sans text-slate-800 flex h-screen overflow-hidden">
 
-    <!-- SIDEBAR KIRI (10 MENU MODUL) -->
+    <!-- SIDEBAR KIRI (NAVIGASI 10 MODUL RESMI) -->
     <aside class="w-64 bg-slate-900 text-slate-300 flex flex-col justify-between p-4 shrink-0 overflow-y-auto">
         <div>
             <div class="flex items-center gap-3 px-2 py-4 border-b border-slate-700">
                 <i class="fa-solid fa-chart-line text-blue-500 text-2xl"></i>
                 <div>
-                    <h1 class="font-bold text-white tracking-wider text-lg">PFMS</h1>
-                    <p class="text-xs text-slate-400">10 Core Modules Active</p>
+                    <h1 class="font-bold text-white tracking-wider text-lg">PFMS Core</h1>
+                    <p class="text-xs text-slate-400">Sesuai Dokumen Rancangan</p>
                 </div>
             </div>
             
-            <!-- Menu Navigasi Berdasarkan 10 Modul -->
-            <nav class="mt-4 space-y-1 text-sm">
-                <button onclick="switchPage('dashboard')" id="menu-dashboard" class="w-full flex items-center gap-3 px-3 py-2 rounded-lg bg-blue-600 text-white font-medium text-left cursor-pointer">
-                    <i class="fa-solid fa-gauge w-5 text-center"></i> M4: Dashboard
+            <nav class="mt-4 space-y-1 text-xs font-medium">
+                <button onclick="switchPage('proyek')" id="menu-proyek" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-white text-left cursor-pointer">
+                    <i class="fa-solid fa-folder w-4 text-center text-slate-400"></i> Modul 1: Data Proyek
                 </button>
-                <button onclick="switchPage('proyek')" id="menu-proyek" class="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 hover:text-white text-left cursor-pointer">
-                    <i class="fa-solid fa-folder w-5 text-center"></i> M1: Data Proyek
+                <button onclick="switchPage('termin')" id="menu-termin" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-white text-left cursor-pointer">
+                    <i class="fa-solid fa-calendar-check w-4 text-center text-slate-400"></i> Modul 2: Data Termin
                 </button>
-                <button onclick="switchPage('termin')" id="menu-termin" class="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 hover:text-white text-left cursor-pointer">
-                    <i class="fa-solid fa-calendar-check w-5 text-center"></i> M2: Data Termin
+                <button onclick="switchPage('pengeluaran')" id="menu-pengeluaran" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-white text-left cursor-pointer">
+                    <i class="fa-solid fa-wallet w-4 text-center text-slate-400"></i> Modul 3: Pengeluaran
                 </button>
-                <button onclick="switchPage('pengeluaran')" id="menu-pengeluaran" class="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 hover:text-white text-left cursor-pointer">
-                    <i class="fa-solid fa-wallet w-5 text-center"></i> M3: Input Pengeluaran
+                <button onclick="switchPage('dashboard')" id="menu-dashboard" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg bg-blue-600 text-white text-left cursor-pointer">
+                    <i class="fa-solid fa-gauge w-4 text-center"></i> Modul 4: Dashboard
                 </button>
-                <button onclick="switchPage('m-anggaran')" id="menu-m-anggaran" class="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 hover:text-white text-left cursor-pointer">
-                    <i class="fa-solid fa-shield-halved w-5 text-center"></i> M5: Monitor Anggaran
+                <button onclick="switchPage('cashflow')" id="menu-cashflow" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-white text-left cursor-pointer">
+                    <i class="fa-solid fa-money-bill-trend-up w-4 text-center text-slate-400"></i> Modul 5: Monitoring Cash Flow
                 </button>
-                <button onclick="switchPage('m-bulanan')" id="menu-m-bulanan" class="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 hover:text-white text-left cursor-pointer">
-                    <i class="fa-solid fa-chart-simple w-5 text-center"></i> M6: Monitor Bulanan
+                <button onclick="switchPage('realisasi')" id="menu-realisasi" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-white text-left cursor-pointer">
+                    <i class="fa-solid fa-scale-balanced w-4 text-center text-slate-400"></i> Modul 6: Anggaran vs Realisasi
                 </button>
-                <button onclick="switchPage('analisis-cat')" id="menu-analisis-cat" class="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 hover:text-white text-left cursor-pointer">
-                    <i class="fa-solid fa-chart-pie w-5 text-center"></i> M7: Analisis Kategori
+                <button onclick="switchPage('estimasi')" id="menu-estimasi" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-white text-left cursor-pointer">
+                    <i class="fa-solid fa-hourglass-half w-4 text-center text-slate-400"></i> Modul 7: Estimasi Dana
                 </button>
-                <button onclick="switchPage('gaji')" id="menu-gaji" class="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 hover:text-white text-left cursor-pointer">
-                    <i class="fa-solid fa-users w-5 text-center"></i> M8: Gaji Karyawan
+                <button onclick="switchPage('gaji')" id="menu-gaji" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-white text-left cursor-pointer">
+                    <i class="fa-solid fa-users w-4 text-center text-slate-400"></i> Modul 8: Gaji Karyawan
                 </button>
-                <button onclick="switchPage('pendamping')" id="menu-pendamping" class="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 hover:text-white text-left cursor-pointer">
-                    <i class="fa-solid fa-user-shield w-5 text-center"></i> M9: Pendamping Desa
+                <button onclick="switchPage('pendamping')" id="menu-pendamping" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-white text-left cursor-pointer">
+                    <i class="fa-solid fa-user-shield w-4 text-center text-slate-400"></i> Modul 9: Pendamping Desa
                 </button>
-                <button onclick="switchPage('forecast')" id="menu-forecast" class="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 hover:text-white text-left cursor-pointer">
-                    <i class="fa-solid fa-arrow-trend-up w-5 text-center"></i> M10: Forecast / Estimasi
+                <button onclick="switchPage('laporan')" id="menu-laporan" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-white text-left cursor-pointer">
+                    <i class="fa-solid fa-file-invoice-dollar w-4 text-center text-slate-400"></i> Modul 10: Laporan
                 </button>
             </nav>
         </div>
 
-        <div class="flex items-center gap-3 p-2 bg-slate-800 rounded-xl mt-4 shrink-0">
-            <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-xs">AJ</div>
+        <div class="flex items-center gap-3 p-2 bg-slate-800 rounded-xl shrink-0">
+            <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-xs">ADM</div>
             <div class="min-w-0">
-                <h4 class="text-xs font-semibold text-white truncate">Aldi Jati Mulya</h4>
-                <p class="text-[10px] text-emerald-400"><i class="fa-solid fa-circle text-[6px]"></i> Online</p>
+                <h4 class="text-xs font-semibold text-white truncate">Administrator</h4>
+                <p class="text-[10px] text-emerald-400"><i class="fa-solid fa-circle text-[6px]"></i> Terintegrasi</p>
             </div>
         </div>
     </aside>
 
     <!-- KONTEN UTAMA -->
     <main class="flex-1 flex flex-col overflow-y-auto">
-        <!-- Header -->
+        <!-- Header Dinamis -->
         <header class="bg-white border-b border-slate-200 px-6 py-4 flex justify-between items-center shrink-0">
             <div>
-                <h2 id="page-title" class="text-xl font-bold text-slate-900 text-uppercase">DASHBOARD</h2>
-                <p id="page-desc" class="text-xs text-slate-500">Sistem Pemantauan Finansial Proyek Dinamis</p>
+                <h2 id="page-title" class="text-lg font-bold text-slate-900">MODUL 4: DASHBOARD</h2>
+                <p id="page-desc" class="text-xs text-slate-500">Menampilkan KPI utama keuangan proyek secara real-time.</p>
             </div>
-            <div class="bg-slate-50 border border-slate-200 px-4 py-2 rounded-xl text-right">
-                <span class="text-xs font-semibold text-slate-700 block">Proyek Deliniasi Lahan PT XXX</span>
-                <span class="text-[10px] text-slate-500">Dana Cair Awal: Rp300.000.000</span>
+            <div class="bg-slate-50 border border-slate-200 px-4 py-1.5 rounded-xl text-right">
+                <span id="headerProjID" class="text-xs font-bold text-blue-600 block">ID PROYEK: PRJ-2026-001</span>
+                <span class="text-[10px] text-slate-500">Status Sinkronisasi Otomatis Aktif</span>
             </div>
         </header>
 
-        <!-- AREA SEKSI JENDELA ISI -->
+        <!-- KONTEN HALAMAN -->
         <div class="p-6 space-y-6">
             
-            <!-- ================= MODUL 4: DASHBOARD ================= -->
-            <section id="sec-dashboard" class="space-y-6">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200 flex items-center gap-4">
-                        <div class="p-3 bg-emerald-50 text-emerald-600 rounded-xl"><i class="fa-solid fa-money-bill-wave text-xl"></i></div>
-                        <div>
-                            <p class="text-xs text-slate-500 font-medium">TOTAL DANA CAIR</p>
-                            <h3 class="text-md font-bold text-slate-900">Rp300.000.000</h3>
-                        </div>
-                    </div>
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200 flex items-center gap-4">
-                        <div class="p-3 bg-amber-50 text-amber-600 rounded-xl"><i class="fa-solid fa-cart-shopping text-xl"></i></div>
-                        <div>
-                            <p class="text-xs text-slate-500 font-medium">TOTAL PENGELUARAN</p>
-                            <h3 id="cardTotalPengeluaran" class="text-md font-bold text-slate-900">Rp0</h3>
-                        </div>
-                    </div>
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200 flex items-center gap-4">
-                        <div class="p-3 bg-cyan-50 text-cyan-600 rounded-xl"><i class="fa-solid fa-vault text-xl"></i></div>
-                        <div>
-                            <p class="text-xs text-slate-500 font-medium">SISA SALDO KAS</p>
-                            <h3 id="cardSaldoKas" class="text-md font-bold text-slate-900">Rp300.000.000</h3>
-                        </div>
-                    </div>
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200 flex items-center gap-4">
-                        <div class="p-3 bg-purple-50 text-purple-600 rounded-xl"><i class="fa-solid fa-percent text-xl"></i></div>
-                        <div>
-                            <p class="text-xs text-slate-500 font-medium">ANGGARAN TERPAKAI</p>
-                            <h3 id="cardPersentase" class="text-md font-bold text-slate-900">0%</h3>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="bg-white p-6 rounded-2xl border border-slate-200 text-center py-12">
-                    <i class="fa-solid fa-chart-pie text-4xl text-slate-300 mb-3"></i>
-                    <h3 class="text-md font-bold text-slate-700">Selamat Datang di Portal Utama PFMS</h3>
-                    <p class="text-xs text-slate-400 mt-1 max-w-md mx-auto">Silakan gunakan menu navigasi sebelah kiri untuk mengakses modul monitoring anggaran spesifik Anda.</p>
-                </div>
-            </section>
-
             <!-- ================= MODUL 1: DATA PROYEK ================= -->
             <section id="sec-proyek" class="hidden bg-white p-6 rounded-2xl border border-slate-200 shadow-xs max-w-2xl">
+                <div class="border-b border-slate-100 pb-3 mb-4 flex justify-between items-center">
+                    <h3 class="font-bold text-slate-800">Informasi Induk Proyek</h3>
+                    <span class="bg-emerald-100 text-emerald-700 text-xs px-2.5 py-0.5 rounded-full font-bold">BERJALAN</span>
+                </div>
                 <div class="space-y-4 text-sm">
-                    <div class="grid grid-cols-3 py-2 border-b border-slate-50"><span class="text-slate-500">Nama Proyek</span><span class="col-span-2 font-medium text-slate-900">Deliniasi Lahan PT XXX</span></div>
-                    <div class="grid grid-cols-3 py-2 border-b border-slate-50"><span class="text-slate-500">Nomor Kontrak</span><span class="col-span-2 font-medium text-slate-700">123/PT-XXX/VII/2024</span></div>
-                    <div class="grid grid-cols-3 py-2 border-b border-slate-50"><span class="text-slate-500">Nilai Kontrak</span><span class="col-span-2 font-bold text-blue-600">Rp1.500.000.000</span></div>
-                    <div class="grid grid-cols-3 py-2 border-b border-slate-50"><span class="text-slate-500">Waktu Pelaksanaan</span><span class="col-span-2 text-slate-700">01 Agustus 2024 - 30 Maret 2025 (8 Bulan)</span></div>
-                    <div class="grid grid-cols-3 py-2 border-b border-slate-50"><span class="text-slate-500">Ketua Tim</span><span class="col-span-2 text-slate-700">Aldi Jati Mulya</span></div>
-                    <div class="grid grid-cols-3 py-2"><span class="text-slate-500">Status Proyek</span><span><span class="bg-emerald-100 text-emerald-700 text-xs px-2.5 py-1 rounded-full font-semibold">BERJALAN</span></span></div>
+                    <div class="grid grid-cols-3 py-1"><span class="text-slate-500">Nama Proyek</span><span class="col-span-2 font-semibold text-slate-900">Deliniasi Lahan & Pemetaan Batas PT XXX</span></div>
+                    <div class="grid grid-cols-3 py-1"><span class="text-slate-500">Nilai Kontrak Induk</span><span class="col-span-2 font-bold text-slate-900">Rp1.500.000.000</span></div>
+                    <div class="grid grid-cols-3 py-1"><span class="text-slate-500">Durasi Pelaksanaan</span><span class="col-span-2 text-slate-700">8 Bulan (01 Agustus 2024 - 30 Maret 2025)</span></div>
+                    <div class="grid grid-cols-3 py-1"><span class="text-slate-500">PIC / Ketua Tim</span><span class="col-span-2 text-slate-700">Aldi Jati Mulya</span></div>
+                </div>
+                <div class="mt-6 p-3 bg-blue-50 text-blue-700 text-xs rounded-lg">
+                    <i class="fa-solid fa-link mr-1"></i> Modul ini digunakan sebagai basis referensi ID relasi data untuk Modul 2 sampai Modul 10.
                 </div>
             </section>
 
             <!-- ================= MODUL 2: DATA TERMIN ================= -->
-            <section id="sec-termin" class="hidden bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+            <section id="sec-termin" class="hidden bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Jadwal & Klaim Termin Pembayaran</h3>
+                    <span class="text-xs text-slate-500">Dana Tersedia dihitung dari Termin berstatus <b class="text-emerald-600">Cair</b></span>
+                </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm text-left">
-                        <thead class="bg-slate-50 text-slate-600 text-xs uppercase border-b border-slate-200">
+                        <thead class="bg-slate-50 text-slate-600 text-xs border-b border-slate-200">
                             <tr>
-                                <th class="px-4 py-3">Termin</th>
-                                <th class="px-4 py-3">Persentase</th>
-                                <th class="px-4 py-3">Nilai Kontrak</th>
-                                <th class="px-4 py-3">Status Klaim</th>
-                                <th class="px-4 py-3">Tanggal Cair</th>
+                                <th class="px-4 py-3">Tahap Termin</th>
+                                <th class="px-4 py-3">Persentase Bobot</th>
+                                <th class="px-4 py-3">Nominal Nilai</th>
+                                <th class="px-4 py-3">Status Pencairan</th>
+                                <th class="px-4 py-3">Tanggal Transaksi</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100 text-slate-700">
                             <tr>
-                                <td class="px-4 py-3.5 font-medium">Termin 1</td>
-                                <td class="px-4 py-3.5">20% dari Kontrak</td>
-                                <td class="px-4 py-3.5 font-semibold text-blue-600">Rp300.000.000</td>
-                                <td class="px-4 py-3.5"><span class="bg-emerald-100 text-emerald-700 text-xs px-2 py-0.5 rounded font-bold">CAIR (Kas Utama)</span></td>
-                                <td class="px-4 py-3.5 text-slate-500">01 Agu 2024</td>
+                                <td class="px-4 py-3 font-medium">Termin 1 (Uang Muka)</td>
+                                <td class="px-4 py-3">20%</td>
+                                <td class="px-4 py-3 font-semibold text-emerald-600">Rp300.000.000</td>
+                                <td class="px-4 py-3"><span class="bg-emerald-100 text-emerald-700 text-xs px-2 py-0.5 rounded font-bold">CAIR</span></td>
+                                <td class="px-4 py-3 text-slate-500">01 Agu 2024</td>
                             </tr>
                             <tr>
-                                <td class="px-4 py-3.5 font-medium">Termin 2</td>
-                                <td class="px-4 py-3.5">25% dari Kontrak</td>
-                                <td class="px-4 py-3.5">Rp375.000.000</td>
-                                <td class="px-4 py-3.5"><span class="bg-amber-100 text-amber-700 text-xs px-2 py-0.5 rounded font-bold">PIUTANG (Belum Cair)</span></td>
-                                <td class="px-4 py-3.5 text-slate-400">-</td>
+                                <td class="px-4 py-3 font-medium">Termin 2 (Progress 50%)</td>
+                                <td class="px-4 py-3">30%</td>
+                                <td class="px-4 py-3 text-slate-600">Rp450.000.000</td>
+                                <td class="px-4 py-3"><span class="bg-amber-100 text-amber-700 text-xs px-2 py-0.5 rounded font-bold">BELUM CAIR</span></td>
+                                <td class="px-4 py-3 text-slate-400">-</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-3 font-medium">Termin 3 (Final 100%)</td>
+                                <td class="px-4 py-3">50%</td>
+                                <td class="px-4 py-3 text-slate-600">Rp750.000.000</td>
+                                <td class="px-4 py-3"><span class="bg-amber-100 text-amber-700 text-xs px-2 py-0.5 rounded font-bold">BELUM CAIR</span></td>
+                                <td class="px-4 py-3 text-slate-400">-</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </section>
 
-            <!-- ================= MODUL 3: INPUT PENGELUARAN ================= -->
+            <!-- ================= MODUL 3: PENGELUARAN ================= -->
             <section id="sec-pengeluaran" class="hidden grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs h-fit">
+                    <h3 class="text-xs font-bold text-slate-700 uppercase mb-3">Catat Transaksi Baru</h3>
                     <form id="formPengeluaran" class="space-y-4">
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 mb-1">Tanggal Transaksi</label>
                             <input type="date" id="inputTanggal" required class="w-full text-sm border border-slate-300 rounded-xl px-3 py-2 bg-slate-50">
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Kategori Anggaran</label>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Kategori Utama</label>
                             <select id="inputKategori" required class="w-full text-sm border border-slate-300 rounded-xl px-3 py-2 bg-slate-50">
                                 <option value="Operasional Lapangan">Operasional Lapangan</option>
                                 <option value="Pembuatan Patok">Pembuatan Patok</option>
@@ -189,21 +165,25 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Deskripsi / Uraian</label>
-                            <input type="text" id="inputDeskripsi" placeholder="Contoh: Pembelian Bahan Kayu" required class="w-full text-sm border border-slate-300 rounded-xl px-3 py-2 bg-slate-50">
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Uraian / Deskripsi</label>
+                            <input type="text" id="inputDeskripsi" placeholder="Contoh: Sewa Kendaraan Lapangan" required class="w-full text-sm border border-slate-300 rounded-xl px-3 py-2 bg-slate-50">
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Nominal Biaya (Rp)</label>
-                            <input type="number" id="inputNominal" placeholder="Contoh: 750000" required class="w-full text-sm border border-slate-300 rounded-xl px-3 py-2 bg-slate-50">
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">PIC Transaksi</label>
+                            <input type="text" id="inputPIC" placeholder="Nama penanggung jawab" required class="w-full text-sm border border-slate-300 rounded-xl px-3 py-2 bg-slate-50">
                         </div>
-                        <button type="submit" class="w-full bg-blue-600 text-white text-sm font-medium py-2.5 rounded-xl hover:bg-blue-700 transition cursor-pointer">Simpan Transaksi</button>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Nominal (Rp)</label>
+                            <input type="number" id="inputNominal" placeholder="0" required class="w-full text-sm border border-slate-300 rounded-xl px-3 py-2 bg-slate-50">
+                        </div>
+                        <button type="submit" class="w-full bg-blue-600 text-white text-sm font-medium py-2.5 rounded-xl hover:bg-blue-700 transition cursor-pointer">Simpan & Kurangi Saldo Kas</button>
                     </form>
                 </div>
 
                 <div class="lg:col-span-2 bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
                     <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Buku Jurnal Harian</h3>
-                        <button onclick="clearSemuaData()" class="text-xs text-rose-500 hover:underline cursor-pointer">Reset Semua Transaksi</button>
+                        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Log Histori Transaksi Pengeluaran</h3>
+                        <button onclick="clearSemuaData()" class="text-xs text-rose-500 hover:underline cursor-pointer">Reset Database Transaksi</button>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-sm text-left">
@@ -211,7 +191,7 @@
                                 <tr>
                                     <th class="px-4 py-2.5">Tanggal</th>
                                     <th class="px-4 py-2.5">Kategori</th>
-                                    <th class="px-4 py-2.5">Keterangan</th>
+                                    <th class="px-4 py-2.5">Keterangan (PIC)</th>
                                     <th class="px-4 py-2.5 text-right">Nominal</th>
                                 </tr>
                             </thead>
@@ -221,91 +201,151 @@
                 </div>
             </section>
 
-            <!-- ================= MODUL 5: MONITORING ANGGARAN ================= -->
-            <section id="sec-m-anggaran" class="hidden bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-6">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-                    <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-100">
-                        <p class="text-xs text-emerald-700 font-semibold">DANA TERSEDIA (KAS)</p>
-                        <h2 id="anggaranTersedia" class="text-xl font-bold text-emerald-900 mt-1">Rp0</h2>
+            <!-- ================= MODUL 4: DASHBOARD ================= -->
+            <section id="sec-dashboard" class="space-y-6">
+                <!-- KPI CARDS -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
+                        <p class="text-[10px] text-slate-400 font-bold tracking-wider">NILAI KONTRAK INDUK</p>
+                        <h3 class="text-lg font-black text-slate-900 mt-1">Rp1.500.000.000</h3>
+                        <div class="w-full bg-slate-100 h-1 rounded-full mt-2"><div class="bg-blue-500 h-1 rounded-full" style="width: 100%"></div></div>
                     </div>
-                    <div class="bg-rose-50 p-4 rounded-xl border border-rose-100">
-                        <p class="text-xs text-rose-700 font-semibold">TOTAL PENGELUARAN REALISASI</p>
-                        <h2 id="anggaranKeluar" class="text-xl font-bold text-rose-900 mt-1">Rp0</h2>
+                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
+                        <p class="text-[10px] text-emerald-600 font-bold tracking-wider">DANA CAIR (TERMIN 1)</p>
+                        <h3 class="text-lg font-black text-emerald-700 mt-1">Rp300.000.000</h3>
+                        <p class="text-[10px] text-slate-400 mt-1">Progress Pencairan Kontrak: 20%</p>
                     </div>
-                    <div class="bg-amber-50 p-4 rounded-xl border border-amber-200">
-                        <p class="text-xs text-amber-700 font-semibold">ESTIMASI KETAHANAN DANA</p>
-                        <h2 id="anggaranCukupHari" class="text-xl font-bold text-amber-900 mt-1">0 Hari Lagi</h2>
+                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
+                        <p class="text-[10px] text-rose-500 font-bold tracking-wider">TOTAL PENGELUARAN REALISASI</p>
+                        <h3 id="cardTotalPengeluaran" class="text-lg font-black text-slate-900 mt-1">Rp0</h3>
+                        <p id="cardPersentaseTerpakai" class="text-[10px] text-slate-400 mt-1">Terpakai 0% dari dana cair</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
+                        <p class="text-[10px] text-cyan-600 font-bold tracking-wider">SISA SALDO KAS AKTUAL</p>
+                        <h3 id="cardSaldoKas" class="text-lg font-black text-cyan-700 mt-1">Rp300.000.000</h3>
+                        <span id="cardStatusDana" class="inline-block text-[9px] font-extrabold px-2 py-0.5 rounded-full mt-1 bg-emerald-50 text-emerald-600">STATUS: SEHAT</span>
                     </div>
                 </div>
-                <div class="p-4 bg-slate-50 rounded-xl text-xs text-slate-500">
-                    <i class="fa-solid fa-circle-info text-blue-500 mr-1"></i> **Catatan Hitung:** Perkiraan sisa hari ketahanan dana dihitung secara dinamis berdasarkan rata-rata pengeluaran harian riil yang Anda input pada Modul 3.
+
+                <!-- DIAGRAM KOMPONEN UTAMA DASHBOARD -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200">
+                        <h4 class="text-xs font-bold text-slate-400 uppercase mb-4">Distribusi Struktur Pengeluaran</h4>
+                        <div class="h-56 flex justify-center items-center">
+                            <canvas id="dashboardDoughnut"></canvas>
+                        </div>
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200">
+                        <h4 class="text-xs font-bold text-slate-400 uppercase mb-4">Tren Grafik Cash Flow Berjalan</h4>
+                        <div class="h-56">
+                            <canvas id="dashboardLineChart"></canvas>
+                        </div>
+                    </div>
                 </div>
             </section>
 
-            <!-- ================= MODUL 6: MONITORING BULANAN ================= -->
-            <section id="sec-m-bulanan" class="hidden bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+            <!-- ================= MODUL 5: MONITORING CASH FLOW ================= -->
+            <section id="sec-cashflow" class="hidden bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Arus Saldo Kas Berjalan Proyek</h3>
+                </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm text-left">
                         <thead class="bg-slate-50 text-slate-600 text-xs border-b border-slate-200">
                             <tr>
-                                <th class="px-4 py-3">Bulan Pelaksanaan</th>
-                                <th class="px-4 py-3 text-right">Dana Masuk / Termin (Rp)</th>
-                                <th class="px-4 py-3 text-right">Dana Keluar / Operasional (Rp)</th>
-                                <th class="px-4 py-3 text-right">Selisih Surplus Netto (Rp)</th>
+                                <th class="px-4 py-3">Tanggal Buku</th>
+                                <th class="px-4 py-3">Uraian Transaksi</th>
+                                <th class="px-4 py-3 text-right text-emerald-600">Pemasukan (+)</th>
+                                <th class="px-4 py-3 text-right text-rose-600">Pengeluaran (-)</th>
+                                <th class="px-4 py-3 text-right text-blue-600">Saldo Akhir Kas</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-slate-100">
-                            <tr>
-                                <td class="px-4 py-3.5 font-medium">Agustus 2024</td>
-                                <td class="px-4 py-3.5 text-right text-emerald-600 font-semibold">Rp300.000.000</td>
-                                <td id="bulananKeluar" class="px-4 py-3.5 text-right text-rose-600">Rp0</td>
-                                <td id="bulananNetto" class="px-4 py-3.5 text-right font-bold text-slate-900">Rp0</td>
-                            </tr>
+                        <tbody id="tabelCashflowBody" class="divide-y divide-slate-100 text-slate-700">
+                            <!-- Diisi dinamis lewat js -->
                         </tbody>
                     </table>
                 </div>
             </section>
 
-            <!-- ================= MODUL 7: ANALISIS KATEGORI ================= -->
-            <section id="sec-analisis-cat" class="hidden bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-6">
-                <div class="max-w-md mx-auto h-64 flex justify-center items-center">
-                    <canvas id="categoryChart"></canvas>
+            <!-- ================= MODUL 6: ANGGARAN VS REALISASI ================= -->
+            <section id="sec-realisasi" class="hidden bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+                <div class="p-3 bg-slate-50 rounded-xl text-xs text-slate-600 flex items-center gap-2">
+                    <i class="fa-solid fa-triangle-exclamation text-amber-500"></i>
+                    <span>Sistem memberikan status <b class="text-rose-600">Kritis</b> jika realisasi pengeluaran melampaui alokasi target rencana anggaran kategori.</span>
                 </div>
-                <div class="p-4 bg-slate-50 rounded-xl text-xs text-slate-500 text-center">
-                    Grafik lingkaran di atas memetakan persentase bobot dana proyek yang terkonsumsi di tiap-tiap sub komponen utama secara dinamis.
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left">
+                        <thead class="bg-slate-50 text-slate-600 text-xs border-b border-slate-200">
+                            <tr>
+                                <th class="px-4 py-3">Kategori Komponen Anggaran</th>
+                                <th class="px-4 py-3 text-right">Alokasi Rencana</th>
+                                <th class="px-4 py-3 text-right">Realisasi Aktual</th>
+                                <th class="px-4 py-3 text-right">Sisa Pagu Anggaran</th>
+                                <th class="px-4 py-3 text-center">Indikator Batas</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabelRealisasiBody" class="divide-y divide-slate-100">
+                            <!-- Diisi dinamis -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ================= MODUL 7: ESTIMASI DANA ================= -->
+            <section id="sec-estimasi" class="hidden bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <p class="text-xs text-slate-500 font-bold">BURN RATE (RATA-RATA HARIAN)</p>
+                        <h2 id="estBurnRate" class="text-xl font-black text-slate-900 mt-1">Rp0</h2>
+                    </div>
+                    <div class="bg-amber-50 p-4 rounded-xl border border-amber-200">
+                        <p class="text-xs text-amber-700 font-bold">CASH RUNWAY</p>
+                        <h2 id="estRunway" class="text-xl font-black text-amber-900 mt-1">0 Hari</h2>
+                    </div>
+                    <div class="bg-rose-50 p-4 rounded-xl border border-rose-100">
+                        <p class="text-xs text-rose-700 font-bold">ESTIMASI TANGGAL DANA HABIS</p>
+                        <h2 id="estTanggalHabis" class="text-md font-bold text-rose-900 mt-2">-</h2>
+                    </div>
+                </div>
+                <div class="p-4 bg-blue-50 text-blue-700 rounded-xl text-xs leading-relaxed">
+                    <i class="fa-solid fa-circle-info mr-1"></i> Analisis Modul 7 di atas secara matematis melacak ritme penyerapan keuangan harian riil pasca validasi entri transaksi guna memitigasi risiko kelangkaan modal kerja tim di lapangan.
                 </div>
             </section>
 
             <!-- ================= MODUL 8: GAJI KARYAWAN ================= -->
             <section id="sec-gaji" class="hidden grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs h-fit">
+                    <h3 class="text-xs font-bold text-slate-700 uppercase mb-3">Input Penggajian SDM</h3>
                     <form id="formGaji" class="space-y-4">
                         <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Anggota Tim</label>
-                            <input type="text" id="gajiNama" placeholder="Contoh: Ahmat" required class="w-full text-sm border border-slate-300 rounded-xl px-3 py-2 bg-slate-50">
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Anggota Karyawan</label>
+                            <input type="text" id="gajiNama" placeholder="Nama lengkap" required class="w-full text-sm border border-slate-300 rounded-xl px-3 py-2 bg-slate-50">
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Jabatan / Peran</label>
-                            <input type="text" id="gajiJabatan" placeholder="Contoh: Surveyor Lapangan" required class="w-full text-sm border border-slate-300 rounded-xl px-3 py-2 bg-slate-50">
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Jabatan / Peran Kerja</label>
+                            <input type="text" id="gajiJabatan" placeholder="Contoh: Surveyor Batas" required class="w-full text-sm border border-slate-300 rounded-xl px-3 py-2 bg-slate-50">
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Nominal Upah (Rp)</label>
-                            <input type="number" id="gajiNominal" placeholder="Contoh: 3500000" required class="w-full text-sm border border-slate-300 rounded-xl px-3 py-2 bg-slate-50">
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Nominal Gaji Pokok (Rp)</label>
+                            <input type="number" id="gajiNominal" placeholder="0" required class="w-full text-sm border border-slate-300 rounded-xl px-3 py-2 bg-slate-50">
                         </div>
-                        <button type="submit" class="w-full bg-emerald-600 text-white text-sm font-medium py-2.5 rounded-xl hover:bg-emerald-700 transition cursor-pointer">Bayarkan Gaji</button>
+                        <button type="submit" class="w-full bg-emerald-600 text-white text-sm font-medium py-2.5 rounded-xl hover:bg-emerald-700 transition cursor-pointer">Simpan Pembayaran Gaji</button>
                     </form>
                 </div>
                 <div class="lg:col-span-2 bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">Rekapitulasi Biaya Histori SDM</h3>
                     <table class="w-full text-sm text-left">
                         <thead class="bg-slate-50 text-slate-600 text-xs border-b border-slate-200">
                             <tr>
-                                <th class="px-4 py-2.5">Nama</th>
+                                <th class="px-4 py-2.5">Nama Personel</th>
                                 <th class="px-4 py-2.5">Jabatan</th>
-                                <th class="px-4 py-2.5">Status</th>
+                                <th class="px-4 py-2.5">Status Salur</th>
                                 <th class="px-4 py-2.5 text-right">Nilai Terbayar</th>
                             </tr>
                         </thead>
-                        <tbody id="tabelGajiBody" class="divide-y divide-slate-100"></tbody>
+                        <tbody id="tabelGajiBody" class="divide-y divide-slate-100">
+                            <!-- Sinkronis otomatis -->
+                        </tbody>
                     </table>
                 </div>
             </section>
@@ -313,64 +353,70 @@
             <!-- ================= MODUL 9: PENDAMPING DESA ================= -->
             <section id="sec-pendamping" class="hidden grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs h-fit">
+                    <h3 class="text-xs font-bold text-slate-700 uppercase mb-3">Input Insentif Pendamping Desa</h3>
                     <form id="formPendamping" class="space-y-4">
                         <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Wilayah / Nama Desa</label>
-                            <input type="text" id="p_desa" placeholder="Contoh: Desa Makmur" required class="w-full text-sm border border-slate-300 rounded-xl px-3 py-2 bg-slate-50">
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Wilayah Desa</label>
+                            <input type="text" id="p_desa" placeholder="Nama desa penugasan" required class="w-full text-sm border border-slate-300 rounded-xl px-3 py-2 bg-slate-50">
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Personil Pendamping</label>
-                            <input type="text" id="p_nama" placeholder="Contoh: Bambang" required class="w-full text-sm border border-slate-300 rounded-xl px-3 py-2 bg-slate-50">
+                            <input type="text" id="p_nama" placeholder="Nama pendamping" required class="w-full text-sm border border-slate-300 rounded-xl px-3 py-2 bg-slate-50">
                         </div>
                         <div class="grid grid-cols-2 gap-2">
                             <div>
                                 <label class="block text-xs font-semibold text-slate-600 mb-1">Hari Kerja</label>
-                                <input type="number" id="p_hari" placeholder="5" required class="w-full text-sm border border-slate-300 rounded-xl px-3 py-2 bg-slate-50">
+                                <input type="number" id="p_hari" placeholder="0" required class="w-full text-sm border border-slate-300 rounded-xl px-3 py-2 bg-slate-50">
                             </div>
                             <div>
-                                <label class="block text-xs font-semibold text-slate-600 mb-1">Rate / Hari (Rp)</label>
-                                <input type="number" id="p_honor" placeholder="200000" required class="w-full text-sm border border-slate-300 rounded-xl px-3 py-2 bg-slate-50">
+                                <label class="block text-xs font-semibold text-slate-600 mb-1">Tarif / Hari (Rp)</label>
+                                <input type="number" id="p_honor" placeholder="0" required class="w-full text-sm border border-slate-300 rounded-xl px-3 py-2 bg-slate-50">
                             </div>
                         </div>
-                        <button type="submit" class="w-full bg-indigo-600 text-white text-sm font-medium py-2.5 rounded-xl hover:bg-indigo-700 transition cursor-pointer">Simpan Kas Desa</button>
+                        <button type="submit" class="w-full bg-indigo-600 text-white text-sm font-medium py-2.5 rounded-xl hover:bg-indigo-700 transition cursor-pointer">Simpan Honor Pendamping</button>
                     </form>
                 </div>
                 <div class="lg:col-span-2 bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">Rekap Pelaporan Biaya Kompensasi Desa</h3>
                     <table class="w-full text-sm text-left">
                         <thead class="bg-slate-50 text-slate-600 text-xs border-b border-slate-200">
                             <tr>
-                                <th class="px-4 py-2.5">Desa</th>
-                                <th class="px-4 py-2.5">Pendamping</th>
-                                <th class="px-4 py-2.5 text-center">Durasi</th>
+                                <th class="px-4 py-2.5">Wilayah Desa</th>
+                                <th class="px-4 py-2.5">Nama Pendamping</th>
+                                <th class="px-4 py-2.5 text-center">Durasi Kerja</th>
                                 <th class="px-4 py-2.5 text-right">Total Honor</th>
                             </tr>
                         </thead>
-                        <tbody id="tabelPendampingBody" class="divide-y divide-slate-100"></tbody>
+                        <tbody id="tabelPendampingBody" class="divide-y divide-slate-100">
+                            <!-- Sinkronis otomatis -->
+                        </tbody>
                     </table>
                 </div>
             </section>
 
-            <!-- ================= MODUL 10: FORECAST / ESTIMASI PENDANAAN ================= -->
-            <section id="sec-forecast" class="hidden bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-4">
-                <div class="p-4 bg-blue-50 border border-blue-100 rounded-xl flex items-start gap-3">
-                    <i class="fa-solid fa-wand-magic-sparkles text-blue-600 text-lg mt-0.5"></i>
+            <!-- ================= MODUL 10: LAPORAN ================= -->
+            <section id="sec-laporan" class="hidden bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-6">
+                <div class="flex justify-between items-center border-b border-slate-100 pb-3">
                     <div>
-                        <h4 class="text-sm font-bold text-blue-900">Prediksi Keuangan Berdasarkan Tren Harian</h4>
-                        <p class="text-xs text-blue-700 mt-0.5">Modul ini menganalisis rata-rata pengeluaran log transaksi Anda untuk menghitung sisa ketahanan operasional proyek sebelum saldo kas menyentuh angka nol.</p>
+                        <h3 class="font-bold text-slate-800">Pusat Konsolidasi Data & Dokumen Audit</h3>
+                        <p class="text-xs text-slate-400">Arsip terintegrasi seluruh neraca keuangan transaksi berjalan.</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="alert('Mengekspor Laporan Arus Kas ke PDF... (Berhasil)')" class="bg-rose-600 text-white text-xs font-semibold px-3 py-1.5 rounded-lg hover:bg-rose-700 cursor-pointer"><i class="fa-solid fa-file-pdf mr-1"></i> Ekspor PDF</button>
+                        <button onclick="alert('Mengekspor Rekapitulasi Finansial ke Excel... (Berhasil)')" class="bg-emerald-600 text-white text-xs font-semibold px-3 py-1.5 rounded-lg hover:bg-emerald-700 cursor-pointer"><i class="fa-solid fa-file-excel mr-1"></i> Ekspor Excel</button>
                     </div>
                 </div>
-                <div class="border border-slate-100 rounded-xl p-4 space-y-3 text-sm">
-                    <div class="flex justify-between border-b border-slate-50 py-2">
-                        <span class="text-slate-500">Rata-rata Pengeluaran Per Transaksi / Hari:</span>
-                        <span id="fore_rata" class="font-semibold text-slate-900">Rp0</span>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                    <div class="p-4 bg-slate-50 rounded-xl space-y-2">
+                        <h4 class="font-bold text-slate-700 uppercase tracking-wide border-b pb-1 mb-2">Ringkasan Pengeluaran Kategori</h4>
+                        <div id="laporanKategoriRingkasan" class="space-y-1.5 text-slate-600"></div>
                     </div>
-                    <div class="flex justify-between border-b border-slate-50 py-2">
-                        <span class="text-slate-500">Sisa Saldo Kas Aktual Saat Ini:</span>
-                        <span id="fore_saldo" class="font-semibold text-slate-900">Rp300.000.000</span>
-                    </div>
-                    <div class="flex justify-between py-2 bg-slate-50 px-2 rounded-lg">
-                        <span class="font-medium text-slate-700">Kesimpulan Proyeksi Anggaran:</span>
-                        <span id="fore_kesimpulan" class="font-bold text-amber-600">Aman (Belum ada data transaksi harian)</span>
+                    <div class="p-4 bg-slate-50 rounded-xl space-y-2">
+                        <h4 class="font-bold text-slate-700 uppercase tracking-wide border-b pb-1 mb-2">Statistik Penggajian & Sektor Khusus</h4>
+                        <div class="space-y-1.5 text-slate-600">
+                            <div class="flex justify-between"><span>Total Biaya SDM Karyawan (M8):</span><span id="repGaji" class="font-bold text-slate-900">Rp0</span></div>
+                            <div class="flex justify-between"><span>Total Kompensasi Wilayah Desa (M9):</span><span id="repDesa" class="font-bold text-slate-900">Rp0</span></div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -378,158 +424,255 @@
         </div>
     </main>
 
-    <!-- LOGIKA JAVASCRIPT INTEGRASI SINKRONISASI 10 MODUL -->
+    <!-- ENGINE LOGIKA JAVASCRIPT INTEGRASI PENUH 10 MODUL -->
     <script>
         const DANA_CAIR_AWAL = 300000000;
-        let dataPengeluaran = JSON.parse(localStorage.getItem('pfms_data')) || [];
-        let categoryChart;
+        // Pagu Alokasi Anggaran Rencana (untuk Modul 6)
+        const PAGU_RENCANA = {
+            "Operasional Lapangan": 100000000,
+            "Pembuatan Patok": 50000000,
+            "Gaji Karyawan": 80000000,
+            "Pendamping Desa": 40000000,
+            "Biaya Lain-lain": 30000000
+        };
+
+        let dataPengeluaran = JSON.parse(localStorage.getItem('pfms_official_data')) || [];
+        let dashboardDoughnutChart, dashboardLineChart;
 
         document.getElementById('inputTanggal').valueAsDate = new Date();
-        initChart();
-        updateTampilan();
+        initCharts();
+        updateSistemMekanisme();
 
-        // --- SISTEM PINDAH HALAMAN NAVIGASI ---
+        // --- MANAJEMEN ROUTING ALUR KERJA INTERFAS (NAVIGASI) ---
         function switchPage(pageName) {
-            const sections = ['dashboard', 'proyek', 'termin', 'pengeluaran', 'm-anggaran', 'm-bulanan', 'analisis-cat', 'gaji', 'pendamping', 'forecast'];
+            const sections = ['proyek', 'termin', 'pengeluaran', 'dashboard', 'cashflow', 'realisasi', 'estimasi', 'gaji', 'pendamping', 'laporan'];
             sections.forEach(s => document.getElementById(`sec-${s}`).classList.add('hidden'));
             sections.forEach(m => {
                 const btn = document.getElementById(`menu-${m}`);
-                if (btn) btn.className = "w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 hover:text-white text-left cursor-pointer";
+                if (btn) btn.className = "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-white text-left cursor-pointer";
             });
 
             document.getElementById(`sec-${pageName}`).classList.remove('hidden');
-            document.getElementById(`menu-${pageName}`).className = "w-full flex items-center gap-3 px-3 py-2 rounded-lg bg-blue-600 text-white font-medium text-left cursor-pointer";
+            document.getElementById(`menu-${pageName}`).className = "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg bg-blue-600 text-white text-left cursor-pointer";
 
-            const titles = {
-                dashboard: ["M4: DASHBOARD UTAMA", "Informasi ringkasan keuangan proyek secara utuh terlampir"],
-                proyek: ["M1: DATA INFORMASI PROYEK", "Berisi rincian informasi legalitas tentang proyek yang dilaksanakan"],
-                termin: ["M2: JADWAL DATA TERMIN", "Berisi tentang status penagihan termin, nominal, tanggal cair, & persentase nilai kontrak"],
-                pengeluaran: ["M3: INPUT PENGELUARAN HARIAN", "Pencatatan pembukuan pengeluaran transaksi log harian tim lapangan"],
-                'm-anggaran': ["M5: MONITORING KETERSEDIAAN ANGGARAN", "Berisi rincian dana tersedia, sisa dana, dan estimasi kecukupan hari"],
-                'm-bulanan': ["M6: MONITORING REKAP BULANAN", "Informasi berkala terkait dana masuk, total dana keluar, serta selisih surplus kas"],
-                'analisis-cat': ["M7: ANALISIS PROPORSI KATEGORI", "Estimasi visual persentase alokasi dana yang dikeluarkan untuk masing-masing sub komponen"],
-                gaji: ["M8: PENGGAJIAN KARYAWAN", "Berisi tentang rekapitulasi pembayaran gaji yang dikeluarkan dan status kevalidannya"],
-                pendamping: ["M9: OPERASIONAL PENDAMPING DESA", "Berisi pelaporan khusus dana kas kompensasi yang dikeluarkan untuk pendamping desa"],
-                forecast: ["M10: FORECAST & OPERATIONAL ESTIMATE", "Estimasi ketahanan finansial sisa hari berdasarkan kalkulasi rata-rata pengeluaran harian"]
+            const infoKonteks = {
+                proyek: ["MODUL 1: DATA PROYEK", "Menyimpan informasi dasar induk dan legalitas proyek yang dilaksanakan."],
+                termin: ["MODUL 2: DATA TERMIN", "Mencatat jadwal termin pembayaran dan menghitung akumulasi dana yang telah cair."],
+                pengeluaran: ["MODUL 3: PENGELUARAN", "Pencatatan validasi pengeluaran log transaksi harian tim lapangan."],
+                dashboard: ["MODUL 4: DASHBOARD REAL-TIME", "Menampilkan visualisasi KPI utama keuangan proyek secara utuh terintegrasi."],
+                cashflow: ["MODUL 5: MONITORING CASH FLOW", "Menggabungkan histori pemasukan dan pengeluaran menjadi tabel arus kas harian."],
+                realisasi: ["MODUL 6: ANGGARAN VS REALISASI", "Membandingkan pagu alokasi rencana anggaran dengan realisasi aktual berjalan."],
+                estimasi: ["MODUL 7: ESTIMASI DANA", "Kalkulasi matematis burn rate, cash runway, dan prediksi tanggal kas habis."],
+                gaji: ["MODUL 8: GAJI KARYAWAN", "Mengelola rekapitulasi data daftar payroll upah tenaga kerja proyek."],
+                pendamping: ["MODUL 9: PENDAMPING DESA", "Pencatatan pelaporan pengeluaran khusus untuk kompensasi pendamping desa."],
+                laporan: ["MODUL 10: LAPORAN KONSOLIDASI", "Menyediakan resume laporan berkas terpadu yang siap diekspor dan diaudit."]
             };
-            document.getElementById('page-title').innerText = titles[pageName][0];
-            document.getElementById('page-desc').innerText = titles[pageName][1];
+            document.getElementById('page-title').innerText = infoKonteks[pageName][0];
+            document.getElementById('page-desc').innerText = infoKonteks[pageName][1];
         }
 
-        // --- SUBMIT INPUT TRANSAKSI (M3) ---
+        // --- HANDLER SUBMIT DATA INPUT ---
         document.getElementById('formPengeluaran').addEventListener('submit', function(e) {
             e.preventDefault();
-            tambahTransaksi(document.getElementById('inputTanggal').value, document.getElementById('inputKategori').value, document.getElementById('inputDeskripsi').value, parseInt(document.getElementById('inputNominal').value));
-            document.getElementById('inputDeskripsi').value = ''; document.getElementById('inputNominal').value = '';
+            catatLog(document.getElementById('inputTanggal').value, document.getElementById('inputKategori').value, document.getElementById('inputDeskripsi').value, document.getElementById('inputPIC').value, parseInt(document.getElementById('inputNominal').value));
+            document.getElementById('inputDeskripsi').value = ''; document.getElementById('inputPIC').value = ''; document.getElementById('inputNominal').value = '';
         });
 
-        // --- SUBMIT DATA GAJI (M8) -> otomatis kecatat di M3 ---
         document.getElementById('formGaji').addEventListener('submit', function(e) {
             e.preventDefault();
             const nama = document.getElementById('gajiNama').value, jab = document.getElementById('gajiJabatan').value, nom = parseInt(document.getElementById('gajiNominal').value);
-            tambahTransaksi(new Date().toISOString().split('T')[0], 'Gaji Karyawan', `Gaji: ${nama} (${jab})`, nom);
+            catatLog(new Date().toISOString().split('T')[0], 'Gaji Karyawan', `Gaji: ${nama} (${jab})`, 'HRD Proyek', nom);
             document.getElementById('gajiNama').value = ''; document.getElementById('gajiJabatan').value = '';
         });
 
-        // --- SUBMIT DATA PENDAMPING (M9) -> otomatis kecatat di M3 ---
         document.getElementById('formPendamping').addEventListener('submit', function(e) {
             e.preventDefault();
             const desa = document.getElementById('p_desa').value, nama = document.getElementById('p_nama').value, hari = parseInt(document.getElementById('p_hari').value), honor = parseInt(document.getElementById('p_honor').value);
-            tambahTransaksi(new Date().toISOString().split('T')[0], 'Pendamping Desa', `Desa: ${desa} | ${nama} (${hari} Hari)`, (hari * honor));
+            catatLog(new Date().toISOString().split('T')[0], 'Pendamping Desa', `Desa: ${desa} | ${nama} (${hari} Hari)`, 'Ops Lapangan', (hari * honor));
             document.getElementById('p_desa').value = ''; document.getElementById('p_nama').value = ''; document.getElementById('p_hari').value = ''; document.getElementById('p_honor').value = '';
         });
 
-        function tambahTransaksi(tanggal, kategori, deskripsi, nominal) {
-            dataPengeluaran.unshift({ tanggal, kategori, deskripsi, nominal });
-            localStorage.setItem('pfms_data', JSON.stringify(dataPengeluaran));
-            updateTampilan();
+        function catatLog(tanggal, kategori, deskripsi, pic, nominal) {
+            dataPengeluaran.unshift({ tanggal, kategori, deskripsi, pic, nominal });
+            localStorage.setItem('pfms_official_data', JSON.stringify(dataPengeluaran));
+            updateSistemMekanisme();
         }
 
-        // --- MOTOR PENGHITUNG DINAMIS SINKRONISASI DATA ---
-        function updateTampilan() {
+        // --- INTERNAL AUTOMATED ENGINE (PROSES PERHITUNGAN OTOMATIS) ---
+        function updateSistemMekanisme() {
             let totalPengeluaran = 0;
-            let kategoriTotals = { "Operasional Lapangan": 0, "Pembuatan Patok": 0, "Gaji Karyawan": 0, "Pendamping Desa": 0, "Biaya Lain-lain": 0 };
+            let realisasiKategori = { "Operasional Lapangan": 0, "Pembuatan Patok": 0, "Gaji Karyawan": 0, "Pendamping Desa": 0, "Biaya Lain-lain": 0 };
+            
+            // Variabel Laporan Khusus
+            let subGajiTotal = 0;
+            let subDesaTotal = 0;
 
-            const tbody = document.getElementById('tabelBody'), tgajiBody = document.getElementById('tabelGajiBody'), tPendamping = document.getElementById('tabelPendampingBody');
-            tbody.innerHTML = ''; tgajiBody.innerHTML = ''; tPendamping.innerHTML = '';
+            const tbodyM3 = document.getElementById('tabelBody'),
+                  tbodyM8 = document.getElementById('tabelGajiBody'),
+                  tbodyM9 = document.getElementById('tabelPendampingBody'),
+                  tbodyM5 = document.getElementById('tabelCashflowBody');
 
+            tbodyM3.innerHTML = ''; tbodyM8.innerHTML = ''; tbodyM9.innerHTML = ''; tbodyM5.innerHTML = '';
+
+            // 1. Loop Induk Validasi & Akumulasi Data Pengeluaran
             dataPengeluaran.forEach(item => {
                 totalPengeluaran += item.nominal;
-                if(kategoriTotals[item.kategori] !== undefined) kategoriTotals[item.kategori] += item.nominal;
+                if(realisasiKategori[item.kategori] !== undefined) realisasiKategori[item.kategori] += item.nominal;
 
-                // Render Jurnal Pengeluaran Harian (M3)
-                tbody.innerHTML += `<tr><td class="px-4 py-2">${formatTanggal(item.tanggal)}</td><td class="px-4 py-2 font-medium">${item.kategori}</td><td class="px-4 py-2 text-slate-500">${item.deskripsi}</td><td class="px-4 py-2 text-right font-semibold">Rp${item.nominal.toLocaleString('id-ID')}</td></tr>`;
+                // Render Modul 3 (Pengeluaran Harian)
+                tbodyM3.innerHTML += `<tr><td class="px-4 py-2">${formatTgl(item.tanggal)}</td><td class="px-4 py-2 font-medium">${item.kategori}</td><td class="px-4 py-2 text-slate-500">${item.deskripsi} <span class="text-xs text-blue-500">(${item.pic})</span></td><td class="px-4 py-2 text-right font-semibold">Rp${item.nominal.toLocaleString('id-ID')}</td></tr>`;
 
-                // Render Sub Gaji (M8)
+                // Sub-Filter Modul 8 (Gaji Karyawan)
                 if (item.kategori === 'Gaji Karyawan' && item.deskripsi.startsWith('Gaji:')) {
-                    const raw = item.deskripsi.replace('Gaji: ', ''), nama = raw.split(' (')[0], jab = raw.includes('(') ? raw.split('(')[1].replace(')', '') : 'Staff';
-                    tgajiBody.innerHTML += `<tr><td class="px-4 py-2 font-medium">${nama}</td><td class="px-4 py-2 text-slate-500">${jab}</td><td class="px-4 py-2"><span class="bg-emerald-100 text-emerald-700 text-xs px-2 py-0.5 rounded font-bold">SUDAH</span></td><td class="px-4 py-2 text-right font-semibold">Rp${item.nominal.toLocaleString('id-ID')}</td></tr>`;
+                    subGajiTotal += item.nominal;
+                    const cleanStr = item.deskripsi.replace('Gaji: ', ''), nm = cleanStr.split(' (')[0], jb = cleanStr.includes('(') ? cleanStr.split('(')[1].replace(')', '') : 'Tenaga Kerja';
+                    tbodyM8.innerHTML += `<tr><td class="px-4 py-2 font-medium">${nm}</td><td class="px-4 py-2 text-slate-500">${jb}</td><td class="px-4 py-2"><span class="bg-emerald-100 text-emerald-700 text-[10px] px-2 py-0.5 rounded font-bold">TERBAYAR</span></td><td class="px-4 py-2 text-right font-semibold text-slate-700">Rp${item.nominal.toLocaleString('id-ID')}</td></tr>`;
                 }
 
-                // Render Sub Pendamping Desa (M9)
+                // Sub-Filter Modul 9 (Pendamping Desa)
                 if (item.kategori === 'Pendamping Desa' && item.deskripsi.startsWith('Desa:')) {
-                    const parts = item.deskripsi.split(' | '), desa = parts[0].replace('Desa: ', ''), subParts = parts[1].split(' ('), nama = subParts[0], hari = subParts[1].replace(' Hari)', '');
-                    tPendamping.innerHTML += `<tr><td class="px-4 py-2 font-medium">${desa}</td><td class="px-4 py-2 text-slate-500">${nama}</td><td class="px-4 py-2 text-center">${hari}</td><td class="px-4 py-2 text-right font-semibold">Rp${item.nominal.toLocaleString('id-ID')}</td></tr>`;
+                    subDesaTotal += item.nominal;
+                    const parts = item.deskripsi.split(' | '), ds = parts[0].replace('Desa: ', ''), sub = parts[1].split(' ('), pnm = sub[0], hr = sub[1].replace(' Hari)', '');
+                    tbodyM9.innerHTML += `<tr><td class="px-4 py-2 font-medium">${ds}</td><td class="px-4 py-2 text-slate-500">${pnm}</td><td class="px-4 py-2 text-center text-xs">${hr} Hari</td><td class="px-4 py-2 text-right font-semibold text-slate-700">Rp${item.nominal.toLocaleString('id-ID')}</td></tr>`;
                 }
             });
 
-            // Isian fallback jika kosong
-            if(!tbody.innerHTML) tbody.innerHTML = `<tr><td colspan="4" class="text-center py-4 text-slate-400 text-xs">Belum ada transaksi.</td></tr>`;
-            if(!tgajiBody.innerHTML) tgajiBody.innerHTML = `<tr><td colspan="4" class="text-center py-4 text-slate-400 text-xs">Belum ada data upah.</td></tr>`;
-            if(!tPendamping.innerHTML) tPendamping.innerHTML = `<tr><td colspan="4" class="text-center py-4 text-slate-400 text-xs">Belum ada kompensasi.</td></tr>`;
+            // Isian Fallback Kosong
+            if(!tbodyM3.innerHTML) tbodyM3.innerHTML = `<tr><td colspan="4" class="text-center py-4 text-slate-400 text-xs">Belum ada entri catatan pengeluaran harian.</td></tr>`;
+            if(!tbodyM8.innerHTML) tbodyM8.innerHTML = `<tr><td colspan="4" class="text-center py-4 text-slate-400 text-xs">Belum ada riwayat penggajian karyawan.</td></tr>`;
+            if(!tbodyM9.innerHTML) tbodyM9.innerHTML = `<tr><td colspan="4" class="text-center py-4 text-slate-400 text-xs">Belum ada pelaporan biaya pendamping desa.</td></tr>`;
 
-            // Hitung Variabel Finansial Utama
-            let sisaSaldo = DANA_CAIR_AWAL - totalPengeluaran;
-            let persentase = (totalPengeluaran / DANA_CAIR_AWAL) * 100;
+            // Kunci Kalkulasi Finansial Bersih
+            let sisaSaldoKas = DANA_CAIR_AWAL - totalPengeluaran;
+            let rasioTerpakai = (totalPengeluaran / DANA_CAIR_AWAL) * 100;
 
-            // Update Kartu Dashboard Utama (M4)
+            // 2. Modifikasi Data Modul 4 (Dashboard KPI Utama)
             document.getElementById('cardTotalPengeluaran').innerText = `Rp${totalPengeluaran.toLocaleString('id-ID')}`;
-            document.getElementById('cardSaldoKas').innerText = `Rp${sisaSaldo.toLocaleString('id-ID')}`;
-            document.getElementById('cardPersentase').innerText = `${persentase.toFixed(1)}%`;
+            document.getElementById('cardSaldoKas').innerText = `Rp${sisaSaldoKas.toLocaleString('id-ID')}`;
+            document.getElementById('cardPersentaseTerpakai').innerText = `Terpakai ${rasioTerpakai.toFixed(1)}% dari dana cair`;
 
-            // Update Seksi Monitoring Anggaran (M5)
-            document.getElementById('anggaranTersedia').innerText = `Rp${sisaSaldo.toLocaleString('id-ID')}`;
-            document.getElementById('anggaranKeluar').innerText = `Rp${totalPengeluaran.toLocaleString('id-ID')}`;
-
-            // Hitung Estimasi Hari Cukup (M5 & M10 Forecast)
-            let rataRataHarian = dataPengeluaran.length > 0 ? (totalPengeluaran / dataPengeluaran.length) : 0;
-            let estimasiHari = (rataRataHarian > 0 && sisaSaldo > 0) ? Math.floor(sisaSaldo / rataRataHarian) : 0;
-
-            document.getElementById('anggaranCukupHari').innerText = dataPengeluaran.length > 0 ? `${estimasiHari} Hari Lagi` : "Dana Utuh";
-            
-            // Update Seksi Monitoring Bulanan (M6)
-            document.getElementById('bulananKeluar').innerText = `Rp${totalPengeluaran.toLocaleString('id-ID')}`;
-            document.getElementById('bulananNetto').innerText = `Rp${sisaSaldo.toLocaleString('id-ID')}`;
-
-            // Update Seksi Forecast Khusus (M10)
-            document.getElementById('fore_rata').innerText = `Rp${rataRataHarian.toLocaleString('id-ID')}`;
-            document.getElementById('fore_saldo').innerText = `Rp${sisaSaldo.toLocaleString('id-ID')}`;
-            if(dataPengeluaran.length > 0) {
-                document.getElementById('fore_kesimpulan').innerText = `Sisa dana diproyeksikan habis dalam kurun waktu ± ${estimasiHari} hari operasional lapangan berjalan.`;
-                document.getElementById('fore_kesimpulan').className = estimasiHari < 15 ? "font-bold text-rose-600" : "font-bold text-emerald-600";
+            const statusCard = document.getElementById('cardStatusDana');
+            if(sisaSaldoKas < 50000000) {
+                statusCard.className = "inline-block text-[9px] font-extrabold px-2 py-0.5 rounded-full mt-1 bg-rose-100 text-rose-700";
+                statusCard.innerText = "STATUS: KRITIS";
+            } else if(sisaSaldoKas < 120000000) {
+                statusCard.className = "inline-block text-[9px] font-extrabold px-2 py-0.5 rounded-full mt-1 bg-amber-100 text-amber-700";
+                statusCard.innerText = "STATUS: PERINGATAN";
+            } else {
+                statusCard.className = "inline-block text-[9px] font-extrabold px-2 py-0.5 rounded-full mt-1 bg-emerald-100 text-emerald-700";
+                statusCard.innerText = "STATUS: SEHAT";
             }
 
-            // Update Data Donat Chart (M7)
-            if(categoryChart) {
-                categoryChart.data.datasets[0].data = Object.values(kategoriTotals);
-                categoryChart.update();
+            // 3. Modifikasi Data Modul 5 (Monitoring Cash Flow - Struktur Matriks Kronologis)
+            // Masukkan saldo awal termin 1 sebagai baris terbawah arus kas
+            let akumulasiArusKas = DANA_CAIR_AWAL;
+            let barisCashflowHTML = ``;
+            
+            // Ambil dari belakang untuk merunut urutan kronologis historis saldo berjalan
+            let urutanTerbalik = [...dataPengeluaran].reverse();
+            urutanTerbalik.forEach(item => {
+                let sblm = akumulasiArusKas;
+                akumulasiArusKas -= item.nominal;
+                barisCashflowHTML = `<tr><td class="px-4 py-2 text-xs">${formatTgl(item.tanggal)}</td><td class="px-4 py-2 text-xs text-slate-600">${item.deskripsi}</td><td class="px-4 py-2 text-right text-xs text-slate-400">-</td><td class="px-4 py-2 text-right text-xs text-rose-600 font-medium">Rp${item.nominal.toLocaleString('id-ID')}</td><td class="px-4 py-2 text-right text-xs font-semibold">Rp${akumulasiArusKas.toLocaleString('id-ID')}</td></tr>` + barisCashflowHTML;
+            });
+            
+            // Baris Pembuka Termin
+            barisCashflowHTML += `<tr class="bg-slate-50/50"><td class="px-4 py-2 text-xs text-slate-400">01 Agu 2024</td><td class="px-4 py-2 text-xs font-bold text-slate-700">Pencairan Termin 1 Proyek (Induk Pemasukan)</td><td class="px-4 py-2 text-right text-xs text-emerald-600 font-bold">Rp300.000.000</td><td class="px-4 py-2 text-right text-xs text-slate-400">-</td><td class="px-4 py-2 text-right text-xs font-bold text-slate-900">Rp300.000.000</td></tr>`;
+            tbodyM5.innerHTML = barisCashflowHTML;
+
+            // 4. Modifikasi Data Modul 6 (Anggaran vs Realisasi + Indikator Kondisional)
+            const tbodyM6 = document.getElementById('tabelRealisasiBody');
+            tbodyM6.innerHTML = '';
+            Object.keys(PAGU_RENCANA).forEach(cat => {
+                let alokasi = PAGU_RENCANA[cat];
+                let real = realisasiKategori[cat];
+                let sisaPagu = alokasi - real;
+                let rasioBatas = (real / alokasi) * 100;
+
+                let lencanaStatus = `<span class="bg-emerald-100 text-emerald-700 text-[10px] font-bold px-2 py-0.5 rounded-md">AMAN</span>`;
+                if(rasioBatas >= 100) {
+                    lencanaStatus = `<span class="bg-rose-100 text-rose-700 text-[10px] font-bold px-2 py-0.5 rounded-md">KRITIS</span>`;
+                } else if(rasioBatas >= 80) {
+                    lencanaStatus = `<span class="bg-amber-100 text-amber-700 text-[10px] font-bold px-2 py-0.5 rounded-md">PERINGATAN</span>`;
+                }
+
+                tbodyM6.innerHTML += `<tr><td class="px-4 py-3 font-medium text-slate-700">${cat}</td><td class="px-4 py-3 text-right font-medium text-slate-500">Rp${alokasi.toLocaleString('id-ID')}</td><td class="px-4 py-3 text-right font-semibold text-slate-900">Rp${real.toLocaleString('id-ID')}</td><td class="px-4 py-3 text-right text-xs ${sisaPagu < 0 ? 'text-rose-600 font-bold':'text-slate-500'}">Rp${sisaPagu.toLocaleString('id-ID')}</td><td class="px-4 py-3 text-center">${lencanaStatus}</td></tr>`;
+            });
+
+            // 5. Modifikasi Data Modul 7 (Estimasi Dana Berbasis Validasi Rata-rata / Burn Rate)
+            let jumlahHariUnik = [...new Set(dataPengeluaran.map(x => x.tanggal))].length || 1;
+            let burnRateHarian = totalPengeluaran / jumlahHariUnik;
+            let cashRunwayHari = burnRateHarian > 0 && sisaSaldoKas > 0 ? Math.floor(sisaSaldoKas / burnRateHarian) : 0;
+
+            document.getElementById('estBurnRate').innerText = `Rp${Math.round(burnRateHarian).toLocaleString('id-ID')}`;
+            document.getElementById('estRunway').innerText = dataPengeluaran.length > 0 ? `${cashRunwayHari} Hari` : "Dana Utuh";
+            
+            if(dataPengeluaran.length > 0 && sisaSaldoKas > 0) {
+                let targetTanggal = new Date();
+                targetTanggal.setDate(targetTanggal.getDate() + cashRunwayHari);
+                document.getElementById('estTanggalHabis').innerText = targetTanggal.toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
+            } else {
+                document.getElementById('estTanggalHabis').innerText = dataPengeluaran.length > 0 ? "KAS HABIS" : "Belum ada transaksi harian";
+            }
+
+            // 6. Modifikasi Data Modul 10 (Pusat Konsolidasi Resume Pelaporan)
+            document.getElementById('repGaji').innerText = `Rp${subGajiTotal.toLocaleString('id-ID')}`;
+            document.getElementById('repDesa').innerText = `Rp${subDesaTotal.toLocaleString('id-ID')}`;
+            
+            const divRepKat = document.getElementById('laporanKategoriRingkasan');
+            divRepKat.innerHTML = '';
+            Object.keys(realisasiKategori).forEach(k => {
+                divRepKat.innerHTML += `<div class="flex justify-between"><span>${k}:</span><span class="font-semibold text-slate-800">Rp${realisasiKategori[k].toLocaleString('id-ID')}</span></div>`;
+            });
+
+            // 7. Sinkronisasi Grafik Chart Dinamis (M4)
+            if(dashboardDoughnutChart) {
+                dashboardDoughnutChart.data.datasets[0].data = Object.values(realisasiKategori);
+                dashboardDoughnutChart.update();
+            }
+            if(dashboardLineChart) {
+                let trenDataSaldo = [];
+                let sldTmp = DANA_CAIR_AWAL;
+                let tglLabels = ['Mulai Kontrak'];
+                trenDataSaldo.push(sldTmp);
+
+                [...urutanTerbalik].forEach(i => {
+                    sldTmp -= i.nominal;
+                    tglLabels.push(i.tanggal.split('-').slice(1).reverse().join('/'));
+                    trenDataSaldo.push(sldTmp);
+                });
+
+                dashboardLineChart.data.labels = tglLabels;
+                dashboardLineChart.data.datasets[0].data = trenDataSaldo;
+                dashboardLineChart.update();
             }
         }
 
-        function initChart() {
-            const ctxCat = document.getElementById('categoryChart').getContext('2d');
-            categoryChart = new Chart(ctxCat, {
+        // --- INSTANSIASI GRAFIK AWAL CHART.JS ---
+        function initCharts() {
+            const ctxDoughnut = document.getElementById('dashboardDoughnut').getContext('2d');
+            dashboardDoughnutChart = new Chart(ctxDoughnut, {
                 type: 'doughnut',
                 data: {
                     labels: ['Operasional Lapangan', 'Pembuatan Patok', 'Gaji Karyawan', 'Pendamping Desa', 'Biaya Lain-lain'],
                     datasets: [{ data: [0, 0, 0, 0, 0], backgroundColor: ['#3b82f6', '#f59e0b', '#10b981', '#8b5cf6', '#64748b'] }]
                 },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } } } }
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { boxWidth: 10, font: { size: 10 } } } } }
+            });
+
+            const ctxLine = document.getElementById('dashboardLineChart').getContext('2d');
+            dashboardLineChart = new Chart(ctxLine, {
+                type: 'line',
+                data: {
+                    labels: ['Mulai Kontrak'],
+                    datasets: [{ label: 'Saldo Kas Berjalan', data: [DANA_CAIR_AWAL], borderColor: '#06b6d4', backgroundColor: 'rgba(6, 182, 212, 0.05)', tension: 0.2, fill: true }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, scales: { y: { ticks: { font: { size: 9 } } }, x: { ticks: { font: { size: 9 } } } }, plugins: { legend: { display: false } } }
             });
         }
 
-        function formatTanggal(str) { return new Date(str).toLocaleDateString('id-ID', { year: 'numeric', month: 'short', day: 'numeric' }); }
-        function clearSemuaData() { if(confirm("Hapus seluruh log transaksi?")) { localStorage.removeItem('pfms_data'); dataPengeluaran = []; updateTampilan(); } }
+        function formatTgl(s) { return new Date(s).toLocaleDateString('id-ID', { year: 'numeric', month: 'short', day: 'numeric' }); }
+        function clearSemuaData() { if(confirm("Bersihkan database transaksi lokal?")) { localStorage.removeItem('pfms_official_data'); dataPengeluaran = []; updateSistemMekanisme(); } }
     </script>
 </body>
 </html>

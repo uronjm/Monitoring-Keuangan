@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PFMS - Project Financial Monitoring System</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-slate-100 font-sans text-slate-800 flex h-screen overflow-hidden">
+
+    <aside class="w-64 bg-slate-900 text-slate-300 flex flex-col justify-between p-4 shrink-0">
+        <div>
+            <div class="flex items-center gap-3 px-2 py-4 border-b border-slate-700">
+                <i class="fa-solid fa-chart-line text-blue-500 text-2xl"></i>
+                <div>
+                    <h1 class="font-bold text-white tracking-wider text-lg">PFMS</h1>
+                    <p class="text-xs text-slate-400">Project Financial System</p>
+                </div>
+            </div>
+            
+            <nav class="mt-6 space-y-1 text-sm">
+                <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-blue-600 text-white font-medium transition">
+                    <i class="fa-solid fa-gauge w-5"></i> Dashboard
+                </a>
+                <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-white transition">
+                    <i class="fa-solid fa-folder w-5"></i> Data Proyek
+                </a>
+                <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-800 hover:text-white transition">
+                    <i class="fa-solid fa-wallet w-5"></i> Pengeluaran
+                </a>
+            </nav>
+        </div>
+
+        <div class="flex items-center gap-3 p-2 bg-slate-800 rounded-xl">
+            <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-sm">AJ</div>
+            <div>
+                <h4 class="text-sm font-semibold text-white">Aldi Jati Mulya</h4>
+                <p class="text-xs text-emerald-400"><i class="fa-solid fa-circle text-[8px]"></i> Online</p>
+            </div>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col overflow-y-auto">
+        <header class="bg-white border-b border-slate-200 px-6 py-4 flex justify-between items-center shrink-0">
+            <div>
+                <h2 class="text-xl font-bold text-slate-900">DASHBOARD</h2>
+                <p class="text-xs text-slate-500">Sistem Pemantauan Finansial Proyek Dinamis</p>
+            </div>
+            <div class="bg-slate-50 border border-slate-200 px-4 py-2 rounded-xl text-right">
+                <span class="text-xs font-semibold text-slate-700 block">Proyek Deliniasi Lahan PT XXX</span>
+                <span class="text-[10px] text-slate-500">Dana Cair Awal: Rp300.000.000</span>
+            </div>
+        </header>
+
+        <div class="p-6 space-y-6">
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 flex items-center gap-4">
+                    <div class="p-3 bg-emerald-50 text-emerald-600 rounded-xl"><i class="fa-solid fa-money-bill-wave text-xl"></i></div>
+                    <div>
+                        <p class="text-xs text-slate-500 font-medium">TOTAL DANA CAIR</p>
+                        <h3 class="text-md font-bold text-slate-900">Rp300.000.000</h3>
+                    </div>
+                </div>
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 flex items-center gap-4">
+                    <div class="p-3 bg-amber-50 text-amber-600 rounded-xl"><i class="fa-solid fa-cart-shopping text-xl"></i></div>
+                    <div>
+                        <p class="text-xs text-slate-500 font-medium">TOTAL PENGELUARAN</p>
+                        <h3 id="cardTotalPengeluaran" class="text-md font-bold text-slate-900">Rp0</h3>
+                    </div>
+                </div>
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 flex items-center gap-4">
+                    <div class="p-3 bg-cyan-50 text-cyan-600 rounded-xl"><i class="fa-solid fa-vault text-xl"></i></div>
+                    <div>
+                        <p class="text-xs text-slate-500 font-medium">SISA SALDO KAS</p>
+                        <h3 id="cardSaldoKas" class="text-md font-bold text-slate-900">Rp300.000.000</h3>
+                    </div>
+                </div>
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 flex items-center gap-4">
+                    <div class="p-3 bg-purple-50 text-purple-600 rounded-xl"><i class="fa-solid fa-percent text-xl"></i></div>
+                    <div>
+                        <p class="text-xs text-slate-500 font-medium">PERSENTASE DIGUNAKAN</p>
+                        <h3 id="cardPersentase" class="text-md font-bold text-slate-900">0%</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+                    <h3 class="text-sm font-bold text-slate-900 mb-4"><i class="fa-solid fa-plus-circle text-blue-500 mr-2"></i>TAMBAH PENGELUARAN</h3>
+                    <form id="formPengeluaran" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Tanggal</label>
+                            <input type="date" id="inputTanggal" required class="w-full text-sm border border-slate-300 rounded-xl px-3 py-2 focus:outline-blue-500 bg-slate-50">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Kategori</label>
+                            <select id="inputKategori" required class="w-full text-sm border border-slate-300 rounded-xl px-3 py-2 focus:outline-blue-500 bg-slate-50">
+                                <option value="Operasional Lapangan">Operasional Lapangan</option>
+                                <option value="Pembuatan Patok">Pembuatan Patok</option>
+                                <option value="Gaji Karyawan">Gaji Karyawan</option>
+                                <option value="Pendamping Desa">Pendamping Desa</option>
+                                <option value="Biaya Lain-lain">Biaya Lain-lain</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Deskripsi / Keperluan</label>
+                            <input type="text" id="inputDeskripsi" placeholder="Contoh: Beli Semen / Makan Tim" required class="w-full text-sm border border-slate-300 rounded-xl px-3 py-2 focus:outline-blue-500 bg-slate-50">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Nominal (Rupiah)</label>
+                            <input type="number" id="inputNominal" placeholder="Contoh: 500000" required class="w-full text-sm border border-slate-300 rounded-xl px-3 py-2 focus:outline-blue-500 bg-slate-50">
+                        </div>
+                        <button type="submit" class="w-full bg-blue-600 text-white text-sm font-medium py-2.5 rounded-xl hover:bg-blue-700 transition shadow-sm cursor-pointer">
+                            Simpan Transaksi
+                        </button>
+                    </form>
+                </div>
+
+                <div class="lg:col-span-2 bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between">
+                    <h3 class="text-sm font-bold text-slate-900 mb-2">PROPORSI PENGELUARAN PROYEK</h3>
+                    <div class="h-64 flex justify-center items-center">
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-sm font-bold text-slate-900">RIWAYAT PENGELUARAN TERBARU</h3>
+                    <button onclick="clearSemuaData()" class="text-xs text-rose-500 hover:underline font-medium cursor-pointer">Hapus Semua Riwayat</button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left">
+                        <thead class="bg-slate-50 text-slate-600 text-xs uppercase font-semibold border-b border-slate-200">
+                            <tr>
+                                <th class="px-4 py-3">Tanggal</th>
+                                <th class="px-4 py-3">Kategori</th>
+                                <th class="px-4 py-3">Deskripsi</th>
+                                <th class="px-4 py-3 text-right">Nominal</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabelBody" class="divide-y divide-slate-100">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        const DANA_CAIR_AWAL = 300000000;
+        let dataPengeluaran = JSON.parse(localStorage.getItem('pfms_data')) || [];
+        let categoryChart;
+
+        // Inisialisasi awal saat halaman dibuka
+        document.getElementById('inputTanggal').valueAsDate = new Date();
+        initChart();
+        updateTampilan();
+
+        // Event listener saat form dikirim (Submit)
+        document.getElementById('formPengeluaran').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const tanggal = document.getElementById('inputTanggal').value;
+            const kategori = document.getElementById('inputKategori').value;
+            const deskripsi = document.getElementById('inputDeskripsi').value;
+            const nominal = parseInt(document.getElementById('inputNominal').value);
+
+            // Tambahkan ke array data
+            dataPengeluaran.unshift({ tanggal, kategori, deskripsi, nominal });
+
+            // Simpan ke LocalStorage
+            localStorage.setItem('pfms_data', JSON.stringify(dataPengeluaran));
+
+            // Reset form input deskripsi & nominal
+            document.getElementById('inputDeskripsi').value = '';
+            document.getElementById('inputNominal').value = '';
+
+            // Update grafik dan tabel halaman
+            updateTampilan();
+        });
+
+        function updateTampilan() {
+            let totalPengeluaran = 0;
+            let kategoriTotals = {
+                "Operasional Lapangan": 0,
+                "Pembuatan Patok": 0,
+                "Gaji Karyawan": 0,
+                "Pendamping Desa": 0,
+                "Biaya Lain-lain": 0
+            };
+
+            // Hitung total dan kelompokkan per kategori
+            const tbody = document.getElementById('tabelBody');
+            tbody.innerHTML = '';
+
+            dataPengeluaran.forEach(item => {
+                totalPengeluaran += item.nominal;
+                if(kategoriTotals[item.kategori] !== undefined) {
+                    kategoriTotals[item.kategori] += item.nominal;
+                }
+
+                // Append baris ke tabel
+                const row = `
+                    <tr class="hover:bg-slate-50 transition">
+                        <td class="px-4 py-3.5 text-slate-600">${formatTanggal(item.tanggal)}</td>
+                        <td class="px-4 py-3.5 font-medium text-slate-800">${item.kategori}</td>
+                        <td class="px-4 py-3.5 text-slate-500">${item.deskripsi}</td>
+                        <td class="px-4 py-3.5 text-right font-semibold text-slate-900">Rp${item.nominal.toLocaleString('id-ID')}</td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+
+            if(dataPengeluaran.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" class="text-center py-8 text-slate-400 text-xs">Belum ada data pengeluaran. Silakan isi form di atas.</td></tr>`;
+            }
+
+            // Hitung sisa saldo & persentase
+            let sisaSaldo = DANA_CAIR_AWAL - totalPengeluaran;
+            let persentase = (totalPengeluaran / DANA_CAIR_AWAL) * 100;
+
+            // Update elemen teks Card atas
+            document.getElementById('cardTotalPengeluaran').innerText = `Rp${totalPengeluaran.toLocaleString('id-ID')}`;
+            document.getElementById('cardSaldoKas').innerText = `Rp${sisaSaldo.toLocaleString('id-ID')}`;
+            document.getElementById('cardPersentase').innerText = `${persentase.toFixed(1)}%`;
+
+            // Update Data Grafik Ringkasan
+            categoryChart.data.datasets[0].data = Object.values(kategoriTotals);
+            categoryChart.update();
+        }
+
+        function initChart() {
+            const ctxCat = document.getElementById('categoryChart').getContext('2d');
+            categoryChart = new Chart(ctxCat, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Operasional Lapangan', 'Pembuatan Patok', 'Gaji Karyawan', 'Pendamping Desa', 'Biaya Lain-lain'],
+                    datasets: [{
+                        data: [0, 0, 0, 0, 0],
+                        backgroundColor: ['#3b82f6', '#f59e0b', '#10b981', '#8b5cf6', '#64748b']
+                    }]
+                },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } }
+                    }
+                }
+            });
+        }
+
+        function formatTanggal(stringTanggal) {
+            const opsi = { year: 'numeric', month: 'short', day: 'numeric' };
+            return new Date(stringTanggal).toLocaleDateString('id-ID', opsi);
+        }
+
+        function clearSemuaData() {
+            if(confirm("Apakah Anda yakin ingin menghapus semua riwayat transaksi?")) {
+                localStorage.removeItem('pfms_data');
+                dataPengeluaran = [];
+                updateTampilan();
+            }
+        }
+    </script>
+</body>
+</html>

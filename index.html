@@ -59,7 +59,7 @@
                 <h1 class="font-display font-semibold text-white text-2xl tracking-wide">PFMS Core</h1>
                 <p class="text-xs text-[#8CA091] mt-1">Silakan masuk untuk mengakses dashboard</p>
             </div>
-            <form id="formLogin" class="space-y-4">
+            <form id="formLogin" class="space-y-4" onsubmit="return false">
                 <div>
                     <label class="block text-xs font-semibold text-[#B9C4BC] mb-1">Username</label>
                     <input type="text" id="loginUsername" required autocomplete="username" class="w-full text-sm border border-[#3A5347] rounded-xl px-3 py-2.5 bg-[#182620] text-white placeholder-slate-500" placeholder="Masukkan username">
@@ -558,9 +558,16 @@
             databaseURL: "https://pfms-project-default-rtdb.asia-southeast1.firebasedatabase.app"
         };
 
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
-        const docRef = db.ref('pfms/data');
+        let db, docRef;
+        let firebaseReady = false;
+        try {
+            firebase.initializeApp(firebaseConfig);
+            db = firebase.database();
+            docRef = db.ref('pfms/data');
+            firebaseReady = true;
+        } catch (err) {
+            console.error('Gagal inisialisasi Firebase:', err);
+        }
 
         // ============================================================
         // 3. DATA AWAL (dipakai HANYA sekali, saat database masih kosong)
@@ -637,6 +644,11 @@
         //    otomatis muncul ke semua orang yang sedang membuka web ini.
         // ============================================================
         function hubungkanDatabase() {
+            if (!firebaseReady) {
+                document.getElementById('headerSyncStatus').innerHTML = '<i class="fa-solid fa-circle text-[#C97A67] text-[6px] mr-1"></i>Gagal terhubung ke database (cek konfigurasi Firebase)';
+                renderAll();
+                return;
+            }
             docRef.once('value').then(snap => {
                 if (!snap.exists()) {
                     docRef.set(DEFAULT_STATE);
@@ -657,6 +669,11 @@
         }
 
         function simpanState() {
+            if (!firebaseReady) {
+                alert('Database belum terhubung, perubahan tidak dapat disimpan. Muat ulang halaman dan periksa koneksi internet.');
+                renderAll();
+                return;
+            }
             docRef.set(appState).catch(err => alert('Gagal menyimpan data: ' + err.message));
         }
 

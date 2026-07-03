@@ -328,6 +328,22 @@
                     <div class="p-4 bg-blue-50 text-blue-700 rounded-xl text-xs leading-relaxed">
                         <i class="fa-solid fa-circle-info mr-1"></i> Analisis Modul 7 di atas secara matematis melacak ritme penyerapan keuangan harian riil pasca validasi entri transaksi guna memitigasi risiko kelangkaan modal kerja tim di lapangan.
                     </div>
+                    <div>
+                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Estimasi Pengeluaran Harian per Sub-Komponen</h4>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm text-left">
+                                <thead class="bg-slate-50 text-slate-600 text-xs border-b border-slate-200">
+                                    <tr>
+                                        <th class="px-4 py-3">Kategori Komponen</th>
+                                        <th class="px-4 py-3 text-right">Total Realisasi</th>
+                                        <th class="px-4 py-3 text-right">Rata-rata / Hari</th>
+                                        <th class="px-4 py-3 text-right">Kontribusi Burn Rate</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabelEstimasiKategori" class="divide-y divide-slate-100"></tbody>
+                            </table>
+                        </div>
+                    </div>
                 </section>
 
                 <!-- ================= MODUL 8: GAJI KARYAWAN ================= -->
@@ -344,6 +360,10 @@
                                 <input type="text" id="gajiJabatan" placeholder="Contoh: Surveyor Batas" required class="w-full text-sm border border-slate-300 rounded-xl px-3 py-2 bg-slate-50">
                             </div>
                             <div>
+                                <label class="block text-xs font-semibold text-slate-600 mb-1">Periode Bulan Gaji</label>
+                                <input type="month" id="gajiBulan" required class="w-full text-sm border border-slate-300 rounded-xl px-3 py-2 bg-slate-50">
+                            </div>
+                            <div>
                                 <label class="block text-xs font-semibold text-slate-600 mb-1">Nominal Gaji Pokok (Rp)</label>
                                 <input type="number" id="gajiNominal" placeholder="0" required class="w-full text-sm border border-slate-300 rounded-xl px-3 py-2 bg-slate-50">
                             </div>
@@ -357,11 +377,25 @@
                                 <tr>
                                     <th class="px-4 py-2.5">Nama Personel</th>
                                     <th class="px-4 py-2.5">Jabatan</th>
+                                    <th class="px-4 py-2.5">Periode</th>
                                     <th class="px-4 py-2.5">Status Salur</th>
                                     <th class="px-4 py-2.5 text-right">Nilai Terbayar</th>
                                 </tr>
                             </thead>
                             <tbody id="tabelGajiBody" class="divide-y divide-slate-100"></tbody>
+                        </table>
+                    </div>
+                    <div class="lg:col-span-3 bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+                        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">Rekap Total Gaji per Bulan</h3>
+                        <table class="w-full text-sm text-left">
+                            <thead class="bg-slate-50 text-slate-600 text-xs border-b border-slate-200">
+                                <tr>
+                                    <th class="px-4 py-2.5">Periode Bulan</th>
+                                    <th class="px-4 py-2.5 text-center">Jumlah Transaksi</th>
+                                    <th class="px-4 py-2.5 text-right">Total Gaji Dibayarkan</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabelRekapGajiBulanan" class="divide-y divide-slate-100"></tbody>
                         </table>
                     </div>
                 </section>
@@ -433,6 +467,21 @@
                             </div>
                         </div>
                     </div>
+                    <div>
+                        <h4 class="font-bold text-slate-700 uppercase tracking-wide text-xs border-b pb-2 mb-3">Laporan Rekap Pengeluaran per Bulan (Seluruh Kategori)</h4>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm text-left">
+                                <thead class="bg-slate-50 text-slate-600 text-xs border-b border-slate-200">
+                                    <tr>
+                                        <th class="px-4 py-3">Periode Bulan</th>
+                                        <th class="px-4 py-3 text-center">Jumlah Transaksi</th>
+                                        <th class="px-4 py-3 text-right">Total Pengeluaran</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabelLaporanBulanan" class="divide-y divide-slate-100"></tbody>
+                            </table>
+                        </div>
+                    </div>
                 </section>
 
             </div>
@@ -473,7 +522,7 @@
             storageBucket: "pfms-project.firebasestorage.app",
             messagingSenderId: "69853279094",
             appId: "1:69853279094:web:430c5b5349f4ab94858057",
-            databaseURL: "https://pfms-project-default-rtdb.asia-southeast1.firebasedatabase.app/"
+            databaseURL: "https://pfms-project-default-rtdb.asia-southeast1.firebasedatabase.app"
         };
 
         firebase.initializeApp(firebaseConfig);
@@ -544,6 +593,7 @@
                 masukKeAplikasi(localStorage.getItem('pfms_username'));
             }
             document.getElementById('inputTanggal').valueAsDate = new Date();
+            document.getElementById('gajiBulan').value = new Date().toISOString().slice(0, 7);
             initCharts();
             hubungkanDatabase();
         });
@@ -718,8 +768,8 @@
 
         document.getElementById('formGaji').addEventListener('submit', function(e) {
             e.preventDefault();
-            const nama = document.getElementById('gajiNama').value, jab = document.getElementById('gajiJabatan').value, nom = parseInt(document.getElementById('gajiNominal').value);
-            catatLog(new Date().toISOString().split('T')[0], 'Gaji Karyawan', `Gaji: ${nama} (${jab})`, 'HRD Proyek', nom);
+            const nama = document.getElementById('gajiNama').value, jab = document.getElementById('gajiJabatan').value, bulanGaji = document.getElementById('gajiBulan').value, nom = parseInt(document.getElementById('gajiNominal').value);
+            catatLog(new Date().toISOString().split('T')[0], 'Gaji Karyawan', `Gaji: ${nama} (${jab})`, 'HRD Proyek', nom, { bulanGaji });
             document.getElementById('gajiNama').value = ''; document.getElementById('gajiJabatan').value = '';
         });
 
@@ -730,8 +780,8 @@
             document.getElementById('p_desa').value = ''; document.getElementById('p_nama').value = ''; document.getElementById('p_hari').value = ''; document.getElementById('p_honor').value = '';
         });
 
-        function catatLog(tanggal, kategori, deskripsi, pic, nominal) {
-            appState.pengeluaran.unshift({ tanggal, kategori, deskripsi, pic, nominal });
+        function catatLog(tanggal, kategori, deskripsi, pic, nominal, extra = {}) {
+            appState.pengeluaran.unshift({ tanggal, kategori, deskripsi, pic, nominal, ...extra });
             simpanState();
         }
 
@@ -796,6 +846,8 @@
             let realisasiKategori = { "Operasional Lapangan": 0, "Pembuatan Patok": 0, "Gaji Karyawan": 0, "Pendamping Desa": 0, "Biaya Lain-lain": 0 };
             let subGajiTotal = 0;
             let subDesaTotal = 0;
+            let rekapGajiBulanan = {};
+            let rekapSemuaBulanan = {};
 
             const tbodyM3 = document.getElementById('tabelBody'),
                   tbodyM8 = document.getElementById('tabelGajiBody'),
@@ -806,6 +858,11 @@
             dataPengeluaran.forEach((item, idx) => {
                 totalPengeluaran += item.nominal;
                 if (realisasiKategori[item.kategori] !== undefined) realisasiKategori[item.kategori] += item.nominal;
+
+                const bulanTransaksi = item.tanggal ? item.tanggal.slice(0, 7) : 'lainnya';
+                if (!rekapSemuaBulanan[bulanTransaksi]) rekapSemuaBulanan[bulanTransaksi] = { total: 0, jumlah: 0 };
+                rekapSemuaBulanan[bulanTransaksi].total += item.nominal;
+                rekapSemuaBulanan[bulanTransaksi].jumlah += 1;
 
                 tbodyM3.innerHTML += `<tr>
                     <td class="px-4 py-2">${formatTgl(item.tanggal)}</td>
@@ -818,7 +875,12 @@
                 if (item.kategori === 'Gaji Karyawan' && item.deskripsi.startsWith('Gaji:')) {
                     subGajiTotal += item.nominal;
                     const cleanStr = item.deskripsi.replace('Gaji: ', ''), nm = cleanStr.split(' (')[0], jb = cleanStr.includes('(') ? cleanStr.split('(')[1].replace(')', '') : 'Tenaga Kerja';
-                    tbodyM8.innerHTML += `<tr><td class="px-4 py-2 font-medium">${nm}</td><td class="px-4 py-2 text-slate-500">${jb}</td><td class="px-4 py-2"><span class="bg-emerald-100 text-emerald-700 text-[10px] px-2 py-0.5 rounded font-bold">TERBAYAR</span></td><td class="px-4 py-2 text-right font-semibold text-slate-700">Rp${item.nominal.toLocaleString('id-ID')}</td></tr>`;
+                    const periodeGaji = item.bulanGaji || bulanTransaksi;
+                    tbodyM8.innerHTML += `<tr><td class="px-4 py-2 font-medium">${nm}</td><td class="px-4 py-2 text-slate-500">${jb}</td><td class="px-4 py-2 text-xs text-slate-500">${formatBulan(periodeGaji)}</td><td class="px-4 py-2"><span class="bg-emerald-100 text-emerald-700 text-[10px] px-2 py-0.5 rounded font-bold">TERBAYAR</span></td><td class="px-4 py-2 text-right font-semibold text-slate-700">Rp${item.nominal.toLocaleString('id-ID')}</td></tr>`;
+
+                    if (!rekapGajiBulanan[periodeGaji]) rekapGajiBulanan[periodeGaji] = { total: 0, jumlah: 0 };
+                    rekapGajiBulanan[periodeGaji].total += item.nominal;
+                    rekapGajiBulanan[periodeGaji].jumlah += 1;
                 }
 
                 if (item.kategori === 'Pendamping Desa' && item.deskripsi.startsWith('Desa:')) {
@@ -829,8 +891,20 @@
             });
 
             if (!tbodyM3.innerHTML) tbodyM3.innerHTML = `<tr><td colspan="5" class="text-center py-4 text-slate-400 text-xs">Belum ada entri catatan pengeluaran harian.</td></tr>`;
-            if (!tbodyM8.innerHTML) tbodyM8.innerHTML = `<tr><td colspan="4" class="text-center py-4 text-slate-400 text-xs">Belum ada riwayat penggajian karyawan.</td></tr>`;
+            if (!tbodyM8.innerHTML) tbodyM8.innerHTML = `<tr><td colspan="5" class="text-center py-4 text-slate-400 text-xs">Belum ada riwayat penggajian karyawan.</td></tr>`;
             if (!tbodyM9.innerHTML) tbodyM9.innerHTML = `<tr><td colspan="4" class="text-center py-4 text-slate-400 text-xs">Belum ada pelaporan biaya pendamping desa.</td></tr>`;
+
+            const tbodyRekapGaji = document.getElementById('tabelRekapGajiBulanan');
+            tbodyRekapGaji.innerHTML = '';
+            Object.keys(rekapGajiBulanan).sort().reverse().forEach(bulan => {
+                const d = rekapGajiBulanan[bulan];
+                tbodyRekapGaji.innerHTML += `<tr>
+                    <td class="px-4 py-2.5 font-semibold text-slate-800">${formatBulan(bulan)}</td>
+                    <td class="px-4 py-2.5 text-center text-slate-500">${d.jumlah} Transaksi</td>
+                    <td class="px-4 py-2.5 text-right font-bold text-emerald-700">Rp${d.total.toLocaleString('id-ID')}</td>
+                </tr>`;
+            });
+            if (!tbodyRekapGaji.innerHTML) tbodyRekapGaji.innerHTML = `<tr><td colspan="3" class="text-center py-4 text-slate-400 text-xs">Belum ada data gaji untuk direkap.</td></tr>`;
 
             let sisaSaldoKas = danaCairAktual - totalPengeluaran;
             let rasioTerpakai = danaCairAktual > 0 ? (totalPengeluaran / danaCairAktual) * 100 : 0;
@@ -923,6 +997,20 @@
                 document.getElementById('estTanggalHabis').innerText = dataPengeluaran.length > 0 ? "KAS HABIS" : "Belum ada transaksi harian";
             }
 
+            const tbodyEstKat = document.getElementById('tabelEstimasiKategori');
+            tbodyEstKat.innerHTML = '';
+            Object.keys(realisasiKategori).forEach(cat => {
+                const totalKat = realisasiKategori[cat];
+                const rataHarianKat = totalKat / jumlahHariUnik;
+                const kontribusi = burnRateHarian > 0 ? (rataHarianKat / burnRateHarian) * 100 : 0;
+                tbodyEstKat.innerHTML += `<tr>
+                    <td class="px-4 py-3 font-medium text-slate-700">${cat}</td>
+                    <td class="px-4 py-3 text-right text-slate-600">Rp${totalKat.toLocaleString('id-ID')}</td>
+                    <td class="px-4 py-3 text-right font-semibold text-slate-900">Rp${Math.round(rataHarianKat).toLocaleString('id-ID')}</td>
+                    <td class="px-4 py-3 text-right text-xs text-slate-500">${kontribusi.toFixed(1)}%</td>
+                </tr>`;
+            });
+
             // --- Modul 10: Laporan ---
             document.getElementById('repGaji').innerText = `Rp${subGajiTotal.toLocaleString('id-ID')}`;
             document.getElementById('repDesa').innerText = `Rp${subDesaTotal.toLocaleString('id-ID')}`;
@@ -932,6 +1020,18 @@
             Object.keys(realisasiKategori).forEach(k => {
                 divRepKat.innerHTML += `<div class="flex justify-between"><span>${k}:</span><span class="font-semibold text-slate-800">Rp${realisasiKategori[k].toLocaleString('id-ID')}</span></div>`;
             });
+
+            const tbodyLapBulanan = document.getElementById('tabelLaporanBulanan');
+            tbodyLapBulanan.innerHTML = '';
+            Object.keys(rekapSemuaBulanan).sort().reverse().forEach(bulan => {
+                const d = rekapSemuaBulanan[bulan];
+                tbodyLapBulanan.innerHTML += `<tr>
+                    <td class="px-4 py-3 font-semibold text-slate-800">${bulan === 'lainnya' ? 'Tanpa Tanggal' : formatBulan(bulan)}</td>
+                    <td class="px-4 py-3 text-center text-slate-500">${d.jumlah} Transaksi</td>
+                    <td class="px-4 py-3 text-right font-bold text-slate-900">Rp${d.total.toLocaleString('id-ID')}</td>
+                </tr>`;
+            });
+            if (!tbodyLapBulanan.innerHTML) tbodyLapBulanan.innerHTML = `<tr><td colspan="3" class="text-center py-4 text-slate-400 text-xs">Belum ada transaksi tercatat.</td></tr>`;
 
             // --- Grafik ---
             if (dashboardDoughnutChart) {
@@ -979,6 +1079,12 @@
         }
 
         function formatTgl(s) { return new Date(s).toLocaleDateString('id-ID', { year: 'numeric', month: 'short', day: 'numeric' }); }
+        function formatBulan(b) {
+            if (!b) return '-';
+            const [y, m] = b.split('-');
+            const namaBulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+            return `${namaBulan[parseInt(m) - 1] || m} ${y}`;
+        }
     </script>
 </body>
 </html>
